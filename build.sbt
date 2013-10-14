@@ -24,12 +24,15 @@ libraryDependencies <<= scalaVersion { scala_version =>
            "commons-io"              % "commons-io"            % "2.4",
          "org.scala-lang"          % "scala-reflect"         % "2.10.0",
         "org.aspectj" % "aspectjweaver" % "1.7.2",
-        "org.aspectj" % "aspectjrt"     % "1.7.2"
+        "org.aspectj" % "aspectjrt"     % "1.7.2",
+        "com.indeed"              % "java-dogstatsd-client" % "2.0.7"
     )
 }
 
 /** Compilation */
 javaOptions += "-Xmx2G"
+
+javaOptions in run += "-javaagent:" + System.getProperty("user.home") + "/.ivy2/cache/org.aspectj/aspectjweaver/jars/aspectjweaver-1.7.2.jar"
 
 scalacOptions ++= Seq("-deprecation", "-unchecked")
 
