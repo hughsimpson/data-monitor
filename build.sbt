@@ -3,7 +3,7 @@ name := "Data Monitor"
 
 version := "0.0.1"
 
-scalaVersion := "2.10.2"
+scalaVersion := "2.10.3"
 
 /** Dependencies */
 resolvers += "Cakesolutions Artifactory Releases" at "http://build.cakesolutions.net/artifactory/all-releases/"
@@ -11,6 +11,8 @@ resolvers += "Cakesolutions Artifactory Releases" at "http://build.cakesolutions
 resolvers += "snapshots-repo" at "http://scala-tools.org/repo-snapshots"
 
 resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
+
+resolvers += "Sonatype snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/"
 
 libraryDependencies <<= scalaVersion { scala_version =>
     val sprayVersion = "1.1-20130207"

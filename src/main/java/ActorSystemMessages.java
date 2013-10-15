@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 class ActorSystemMessages {
-    private final Map<Long, Integer> messages = new HashMap<>();
+    private final Map<Long, Integer> messages = new HashMap<Long, Integer>();
 
     void recordMessage() {
         long second = System.currentTimeMillis() / 1000;
