@@ -2,6 +2,7 @@
 
     <aspects>
         <aspect name="monitor.MonitorAspect"/>
+        <include within="monitor.*"/>
     </aspects>
 
     <weaver options="-XnoInline">

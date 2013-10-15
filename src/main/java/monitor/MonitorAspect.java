@@ -1,4 +1,6 @@
-package main.java;
+package monitor;
+
+import monitor.DataDogCalls;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -14,12 +16,16 @@ import javax.management.NotCompliantMBeanException;
 @Aspect
 public class MonitorAspect {
 
-    final ActorSystemMessages messages;
+    final DataDogCalls dataDogCalls;
 
-    public MonitorAspect() throws InstanceAlreadyExistsException, MalformedObjectNameException,
+
+
+        public MonitorAspect() throws InstanceAlreadyExistsException, MalformedObjectNameException,
             NotCompliantMBeanException, MBeanRegistrationException {
-        this.messages = new ActorSystemMessages();
-        JMXEndpoint.start(messages);
+//            System.out.println("#########");
+        this.dataDogCalls = new DataDogCalls();
+//            System.out.println("---------");
+        Initialiser.start(dataDogCalls);
     }
 
   @Pointcut(
@@ -30,6 +36,7 @@ public class MonitorAspect {
   @Before(value = "receiveMessagePointcut(msg)",
     argNames = "jp,msg")
   public void message(JoinPoint jp, Object msg) {
-      messages.recordMessage();
+//      messages.recordMessage();
+      dataDogCalls.logSuccess();
   }
 }

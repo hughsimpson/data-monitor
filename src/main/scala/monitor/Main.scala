@@ -1,11 +1,14 @@
-package main.scala
+package monitor
 
-import main.java._
 import akka.actor.{ActorRef, ActorSystem}
 
 object Main extends App {
   import akka.actor.ActorDSL._
   import Commands._
+
+  val dd = new DataDogCalls()
+
+//  val monitor = new MonitorAspect()
 
   implicit val system = ActorSystem()
 
@@ -16,7 +19,9 @@ object Main extends App {
         self ! (sender, i)
       case (sender: ActorRef, i: Int) =>
         if (i > 0)
-          self ! (sender, i - 1)
+        {
+//          dd.logSuccess()
+          self ! (sender, i - 1)}
         else
           sender ! "zero"
     }
@@ -32,6 +37,8 @@ object Main extends App {
       case CountdownCommand(count) => chatter ! count.toInt
 
       case QuitCommand             => return
+
+      case x          =>           println("nope")
     }
 
     commandLoop()
