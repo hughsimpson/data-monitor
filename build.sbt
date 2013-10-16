@@ -1,7 +1,7 @@
 /** Project */
 name := "Data Monitor"
 
-version := "0.0.1"
+version := "0.0.2"
 
 scalaVersion := "2.10.3"
 
@@ -20,20 +20,11 @@ libraryDependencies <<= scalaVersion { scala_version =>
     )
 }
 
-scalacOptions ++= Seq(
-  "-unchecked",
-  "-deprecation",
-  "-Xlint",
-  "-Ywarn-dead-code",
-  "-language:_",
-  "-target:jvm-1.7",
-  "-encoding", "UTF-8"
-)
-
-parallelExecution in Test := false
-
+/* You might have to change this, I guess, if there's something weird going on with your ivy cache */
 javaOptions in run += "-javaagent:" + System.getProperty("user.home") + "/.ivy2/cache/org.aspectj/aspectjweaver/jars/aspectjweaver-1.7.2.jar"
 
+/* We can't apply the akka actor aspect in the same VM as sbt... */
 fork in run := true
 
+/* For the main class readline trickery */
 connectInput in run := true

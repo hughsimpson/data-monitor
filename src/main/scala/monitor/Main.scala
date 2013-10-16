@@ -11,6 +11,7 @@ object Main extends App {
   val chatter = actor(new Act {
     become {
       case i: Int =>
+        println("o")
         self ! (sender, i)
       case (sender: ActorRef, i: Int) =>
         if (i > 0)
@@ -28,7 +29,7 @@ object Main extends App {
 
   def commandLoop(): Unit = {
     readLine() match {
-      case CountdownCommand(count) => chatter ! count.toInt
+      case CountdownCommand(count) => (0 until 5).par.map {_=>chatter ! count.toInt}
 
       case QuitCommand             => return
 
