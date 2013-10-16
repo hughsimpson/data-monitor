@@ -6,13 +6,8 @@ object Main extends App {
   import akka.actor.ActorDSL._
   import Commands._
 
-  val dd = new DataDogCalls()
-
-//  val monitor = new MonitorAspect()
-
   implicit val system = ActorSystem()
 
-//  println("hello wordl!")
   val chatter = actor(new Act {
     become {
       case i: Int =>
@@ -20,7 +15,6 @@ object Main extends App {
       case (sender: ActorRef, i: Int) =>
         if (i > 0)
         {
-//          dd.logSuccess()
           self ! (sender, i - 1)}
         else
           sender ! "zero"

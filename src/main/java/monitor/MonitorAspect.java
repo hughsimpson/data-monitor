@@ -1,7 +1,5 @@
 package monitor;
 
-import monitor.DataDogCalls;
-
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -12,31 +10,19 @@ import javax.management.MBeanRegistrationException;
 import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
 
-
 @Aspect
 public class MonitorAspect {
-
     final DataDogCalls dataDogCalls;
 
-
-
-        public MonitorAspect() throws InstanceAlreadyExistsException, MalformedObjectNameException,
-            NotCompliantMBeanException, MBeanRegistrationException {
-//            System.out.println("#########");
+    public MonitorAspect() throws InstanceAlreadyExistsException, MalformedObjectNameException, NotCompliantMBeanException, MBeanRegistrationException {
         this.dataDogCalls = new DataDogCalls();
-//            System.out.println("---------");
-        Initialiser.start(dataDogCalls);
     }
 
-  @Pointcut(
-    value = "execution (* akka.actor.ActorCell.receiveMessage(..)) && args(msg)",
-    argNames = "msg")
+  @Pointcut(value = "execution (* akka.actor.ActorCell.receiveMessage(..)) && args(msg)", argNames = "msg")
   public void receiveMessagePointcut(Object msg) {}
 
-  @Before(value = "receiveMessagePointcut(msg)",
-    argNames = "jp,msg")
+  @Before(value = "receiveMessagePointcut(msg)", argNames = "jp,msg")
   public void message(JoinPoint jp, Object msg) {
-//      messages.recordMessage();
       dataDogCalls.logSuccess();
   }
 }

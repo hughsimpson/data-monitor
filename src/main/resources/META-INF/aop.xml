@@ -4,8 +4,7 @@
         <aspect name="monitor.MonitorAspect"/>
     </aspects>
 
-    <weaver options="-XnoInline">
-        <include within="dogBeans.*"/>
+    <weaver options="-XnoInline -showWeaveInfo">
         <include within="monitor.*"/>
         <include within="akka.actor.*"/>
     </weaver>
