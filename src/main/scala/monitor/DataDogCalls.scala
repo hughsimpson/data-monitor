@@ -10,6 +10,8 @@ object DataDogCalls {
     case i:Int if 150 < i && i<200 => statsd.incrementCounter("message.between150And200")
     case i:Int => statsd.incrementCounter("message.otherNumber")
     case i:String => statsd.incrementCounter("message.UnknownString")
+    case (sender: ActorRef, i: Int) if i % 500 == 0 =>
+      statsd.recordHistogramValue("message.fromTuple",i)
     case (sender: ActorRef, i: Int) => statsd.recordHistogramValue("message.fromTuple",i)
     case x => statsd.incrementCounter(s"message.${x.getClass.toString}")
   }}
