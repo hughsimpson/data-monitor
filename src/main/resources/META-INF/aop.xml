@@ -5,8 +5,8 @@
     </aspects>
 
     <weaver options="-XnoInline -showWeaveInfo ">
-        <include within="com.monitor.*"/>
-        <include within="akka.actor.*"/>
+        <!--<include within="com.monitor.*"/>-->
+        <!--<include within="akka.actor.*"/>-->
     </weaver>
 
 </aspectj>

@@ -11,8 +11,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <scala.version>2.10.2</scala.version>
-        <aspectj.agent>/home/hugh/.ivy2/cache/org.aspectj/aspectjweaver/jars/aspectjweaver-1.7.3.jar</aspectj.agent>
+        <scala.version.reduced>2.10</scala.version.reduced>
         <aspectj.version>1.7.3</aspectj.version>
+        <aspectj.agent>${user.home}/.m2/repository/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar</aspectj.agent>
     </properties>
     <url>http://maven.apache.org</url>
     <repositories>
@@ -49,7 +50,7 @@
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-actor_2.10</artifactId>
+            <artifactId>akka-actor_${scala.version.reduced}</artifactId>
             <version>2.2.0</version>
         </dependency>
         <dependency>
@@ -107,7 +108,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <scalaVersion>2.10.2</scalaVersion>
+                    <scalaVersion>${scala.version}</scalaVersion>
                 </configuration>
             </plugin>
             <plugin>
@@ -115,18 +116,10 @@
                 <artifactId>aspectj-maven-plugin</artifactId>
                 <version>1.5</version>
                 <configuration>
-                    <!--<inpath>${path.to.aspect}/.ivy2/cache/org.aspectj/aspectjweaver/jars/aspectjweaver-1.7.3.jar</inpath>-->
                     <showWeaveInfo>true</showWeaveInfo>
                     <complianceLevel>1.7</complianceLevel>
                     <xmlConfigured>src/main/resources/META-INF/aop.xml</xmlConfigured>
-                    <!--<Xset>weaveJavaxPackages=true</Xset>-->
                     <forceAjcCompile>true</forceAjcCompile>
-                    <!--<aspectLibraries>-->
-                        <!--<aspectLibrary>-->
-                            <!--<groupId>org.springframework</groupId>-->
-                            <!--<artifactId>spring-aspects</artifactId>-->
-                        <!--</aspectLibrary>-->
-                    <!--</aspectLibraries>-->
                 </configuration>
                 <executions>
                     <execution>
