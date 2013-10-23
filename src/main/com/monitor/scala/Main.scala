@@ -1,4 +1,4 @@
-package monitor
+package com.monitor.scala
 
 import akka.actor.{ActorRef, ActorSystem}
 

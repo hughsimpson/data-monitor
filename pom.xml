@@ -11,7 +11,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <scala.version>2.10.2</scala.version>
-        <path.to.aspect>/home/hugh<!--${System.getProperty("user.home")}--></path.to.aspect>
+        <aspectj.agent>/home/hugh/.ivy2/cache/org.aspectj/aspectjweaver/jars/aspectjweaver-1.7.3.jar</aspectj.agent>
+        <aspectj.version>1.7.3</aspectj.version>
     </properties>
     <url>http://maven.apache.org</url>
     <repositories>
@@ -54,12 +55,12 @@
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>1.7.3</version>
+            <version>${aspectj.version}</version>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
-            <version>1.7.3</version>
+            <version>${aspectj.version}</version>
         </dependency>
         <dependency>
             <groupId>com.indeed</groupId>
@@ -71,6 +72,8 @@
 
     <build>
         <sourceDirectory>src/main</sourceDirectory>
+
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -87,29 +90,20 @@
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
                 <version>3.1.6</version>
-
                 <executions>
                     <execution>
                         <id>compile</id>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
+                        <goals><goal>compile</goal></goals>
                         <phase>compile</phase>
                     </execution>
-
                     <execution>
                         <id>test-compile</id>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
+                        <goals><goal>testCompile</goal></goals>
                         <phase>test-compile</phase>
                     </execution>
-
                     <execution>
                         <phase>process-resources</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
+                        <goals><goal>compile</goal></goals>
                     </execution>
                 </executions>
                 <configuration>
@@ -121,27 +115,64 @@
                 <artifactId>aspectj-maven-plugin</artifactId>
                 <version>1.5</version>
                 <configuration>
-                    <inpath>${path.to.aspect}/.ivy2/cache/org.aspectj/aspectjweaver/jars/aspectjweaver-1.7.3.jar</inpath>
+                    <!--<inpath>${path.to.aspect}/.ivy2/cache/org.aspectj/aspectjweaver/jars/aspectjweaver-1.7.3.jar</inpath>-->
                     <showWeaveInfo>true</showWeaveInfo>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <complianceLevel>1.7</complianceLevel>
+                    <xmlConfigured>src/main/resources/META-INF/aop.xml</xmlConfigured>
+                    <!--<Xset>weaveJavaxPackages=true</Xset>-->
+                    <forceAjcCompile>true</forceAjcCompile>
+                    <!--<aspectLibraries>-->
+                        <!--<aspectLibrary>-->
+                            <!--<groupId>org.springframework</groupId>-->
+                            <!--<artifactId>spring-aspects</artifactId>-->
+                        <!--</aspectLibrary>-->
+                    <!--</aspectLibraries>-->
                 </configuration>
                 <executions>
                     <execution>
                         <goals>
                             <goal>compile</goal>       <!-- use this goal to weave all your main classes -->
-                            <goal>test-compile</goal>  <!-- use this goal to weave all your test classes -->
+                            <!--<goal>test-compile</goal>  &lt;!&ndash; use this goal to weave all your test classes &ndash;&gt;-->
                         </goals>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjrt</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjtools</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.9</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <forkMode>once</forkMode>
+                    <argLine>
+                        -javaagent:${aspectj.agent}
+                    </argLine>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <executable>java</executable>
+                    <mainClass>com.monitor.scala.Main</mainClass>
+                    <arguments>
+                        <!--<argument>-Xmx1000m</argument>-->
+                        <argument>-javaagent:${aspectj.agent}</argument>
+                        <!--<argument>-classpath</argument>-->
+                    </arguments>
                 </configuration>
             </plugin>
         </plugins>
