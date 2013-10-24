@@ -1,7 +1,6 @@
-(ns com.domain.tiny
-  (:gen-class
-    :name com.domain.tiny
-    :methods [#^{:static true} [binomial [int int] double]]))
+(gen-class
+    :name com.monitor.clojure.random
+    :methods [#^{:static true} [binomial [int int] double]])
 
 (defn binomial
   "Calculate the binomial coefficient."

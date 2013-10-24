@@ -38,6 +38,8 @@ object Main extends App {
 
     commandLoop()
   }
+//  import com.monitor.clojure._
+//  println(random.binomial(5, 3))
 
   commandLoop()
   system.shutdown()
