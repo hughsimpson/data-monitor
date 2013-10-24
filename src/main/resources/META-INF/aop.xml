@@ -5,6 +5,7 @@
     </aspects>
 
     <weaver options="-XnoInline -showWeaveInfo ">
+        <exclude within="com.monitor.clojure.*"/>
         <!--<include within="com.monitor.*"/>-->
         <!--<include within="akka.actor.*"/>-->
     </weaver>

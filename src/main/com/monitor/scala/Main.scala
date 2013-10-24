@@ -38,8 +38,9 @@ object Main extends App {
 
     commandLoop()
   }
-//  import com.monitor.clojure._
-//  println(random.binomial(5, 3))
+  import com.monitor._      // For these to work: You need to first mvn compile with these lines commented out
+//  println(random.binomial(120, 63))  // then run the 'main' class with 'Make, no error check' in your configuration
+//  random.printbinomial(120, 57)      // (at least, that's the case in intelliJ. Not sure how one would deploy it.)
 
   commandLoop()
   system.shutdown()
