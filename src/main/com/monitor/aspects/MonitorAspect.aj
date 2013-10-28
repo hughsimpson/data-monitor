@@ -9,9 +9,13 @@ public aspect MonitorAspect {
         System.out.println("££££");
         DataDogCalls.logSuccess();
     }
-    after(akka.actor.ActorCell actorCell, Object msgs) : target(actorCell) && call(* akka.actor.ActorCell.receiveMessage(..)) && args(msgs) {
-        System.out.println("###");
+    pointcut receiveMessage(akka.actor.ActorCell actorCell, Object msg) : target(actorCell) &&
+     call (* akka.actor.ActorCell.receiveMessage(..)) && args(msg);
+
+    before(akka.actor.ActorCell actorCell, Object msg): receiveMessage(actorCell, msg) {
         DataDogCalls.logSuccess();
+        actorCell.guardian();
+        System.out.println("!£$^^$&");
     }
 
 
