@@ -21,6 +21,6 @@ public class MonitorAspect {
 
   @Before(value = "receiveMessagePointcut(msg)", argNames = "jp,msg")
   public void message(JoinPoint jp, Object msg) {
-      DataDogCalls.logSuccess();
+      DataDogCalls.gauge(msg);
   }
 }
